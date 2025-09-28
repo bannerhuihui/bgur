@@ -1,0 +1,23 @@
+server:
+  port: 8899
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bgur?useSSL=false&serverTimezone=UTC
+    username: bgur
+    password: tzXr9ejizlvxlDR
+    driver-class-name: com.mysql.jdbc.Driver
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: admin
+      username: admin
+      password: C2k9hxZw1yeFC2w
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

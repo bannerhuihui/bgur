@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: local   # 默认激活本地环境，可改为 prod 上线时
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.bgur.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
