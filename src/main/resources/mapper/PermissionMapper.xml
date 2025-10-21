@@ -43,6 +43,26 @@
     JOIN permission p ON rp.permission_id = p.id
     WHERE ur.user_id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectPermissionByUserIdAndCompanyId" resultMap="BaseResultMap" parameterType="com.bgur.pojo.Permission" >
+    select
+      p.id,
+      p.parent_id,
+      p.name,
+      p.code,
+      p.type,
+      p.path,
+      p.icon,
+      p.sort,
+      p.meta,
+      p.company_id,
+      p.description,
+      p.component
+    FROM user_role ur
+           JOIN role_permission rp ON ur.role_id = rp.role_id
+           JOIN permission p ON rp.permission_id = p.id
+    WHERE ur.user_id = #{id,jdbcType=INTEGER} and p.company_id = #{companyId}
+  </select>
+
   <insert id="insertSelective" parameterType="com.bgur.pojo.Permission" >
     insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >

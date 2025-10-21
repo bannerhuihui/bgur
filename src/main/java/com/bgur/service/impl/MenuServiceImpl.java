@@ -4,7 +4,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.bgur.common.CommonEun;
 import com.bgur.common.CommonResult;
 import com.bgur.mapper.PermissionMapper;
+import com.bgur.mapper.UserMapper;
 import com.bgur.pojo.Permission;
+import com.bgur.pojo.User;
 import com.bgur.service.MenuService;
 import com.bgur.util.SecurityUtils;
 import com.bgur.vo.MenuTreeVO;
@@ -31,6 +33,9 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private PermissionMapper permissionMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @Override
     public CommonResult getCurrentUserMenuTree() {
@@ -39,7 +44,8 @@ public class MenuServiceImpl implements MenuService {
         if(userId == null){
             return CommonResult.failure(CommonEun.USER_LOGIN_NOT_FOND);
         }
-        List<Permission> permissions = permissionMapper.selectPermissionByUserId(userId);
+        User user = userMapper.selectByPrimaryKey(userId);
+        List<Permission> permissions = permissionMapper.selectPermissionByUserIdAndCompanyId(user);
         if(CollectionUtil.isEmpty(permissions)){
             return CommonResult.failure(CommonEun.TREE_PERMISSION_NULL);
         }

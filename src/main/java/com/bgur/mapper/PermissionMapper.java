@@ -1,6 +1,7 @@
 package com.bgur.mapper;
 
 import com.bgur.pojo.Permission;
+import com.bgur.pojo.User;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface PermissionMapper {
     int updateByPrimaryKeySelective(Permission record);
 
     List<Permission> selectPermissionByUserId(Integer id);
+
+    List<Permission> selectPermissionByUserIdAndCompanyId(User user);
 }
