@@ -112,6 +112,7 @@ public class UserServiceImpl implements UserService {
             resUser.setLastLoginTime(checkLoginUser.getLastLoginTime());
             resUser.setLevel(checkLoginUser.getLevel());
             resUser.setAvatar(checkLoginUser.getAvatar());
+            resUser.setCompanyId(checkLoginUser.getCompanyId());
             //4。返回对应的数据给前端
             loginVo.setUser(resUser);
             return CommonResult.success(loginVo);
