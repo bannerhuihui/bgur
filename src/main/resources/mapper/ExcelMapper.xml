@@ -25,7 +25,7 @@
     from excel
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insertSelective" parameterType="com.bgur.pojo.Excel" >
+  <insert id="insertSelective" parameterType="com.bgur.pojo.Excel" useGeneratedKeys="true" keyProperty="id" >
     insert into excel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -140,4 +140,57 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from excel
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId}
+      </if>
+      <if test="companyId != null">
+        and company_id = #{companyId}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      <if test="isAnalyzing != null">
+        and is_analyzing = #{isAnalyzing}
+      </if>
+      <if test="beginTime != null">
+        and create_time <![CDATA[>=]]> #{beginTime}
+      </if>
+      <if test="endTime != null">
+        and create_time <![CDATA[<=]]> #{endTime}
+      </if>
+    </where>
+    order by id desc
+    limit #{limit} offset #{offset}
+  </select>
+
+  <select id="countList" parameterType="map" resultType="int">
+    select count(1)
+    from excel
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId}
+      </if>
+      <if test="companyId != null">
+        and company_id = #{companyId}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      <if test="isAnalyzing != null">
+        and is_analyzing = #{isAnalyzing}
+      </if>
+      <if test="beginTime != null">
+        and create_time <![CDATA[>=]]> #{beginTime}
+      </if>
+      <if test="endTime != null">
+        and create_time <![CDATA[<=]]> #{endTime}
+      </if>
+    </where>
+  </select>
 </mapper>

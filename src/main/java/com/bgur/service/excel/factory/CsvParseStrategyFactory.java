@@ -23,26 +23,45 @@ public class CsvParseStrategyFactory {
     }
 
     public void register(CsvParseStrategy strategy) {
-        STRATEGIES.put(strategy.getType(), strategy);
+        String type = strategy.getType();
+        STRATEGIES.put(type, strategy);
+        switch (type) {
+            case "1":
+                STRATEGIES.put("EtfHolder", strategy);
+                break;
+            case "2":
+                STRATEGIES.put("EtfHolding", strategy);
+                break;
+            case "3":
+                STRATEGIES.put("IndexHolding", strategy);
+                break;
+            case "4":
+                STRATEGIES.put("IndexTrading", strategy);
+                break;
+            case "5":
+                STRATEGIES.put("StockTrading", strategy);
+                break;
+            default:
+                break;
+        }
     }
 
     public CsvParseStrategy get(String type) {
         if (type == null) return null;
-        // 先尝试按字符串类型名直接获取（例如：EtfHolder）
-        CsvParseStrategy strategy = STRATEGIES.get(type);
+        String normalized = type.trim();
+        CsvParseStrategy strategy = STRATEGIES.get(normalized);
         if (strategy != null) return strategy;
-        // 兼容数字型 type（1-5）与类型名的映射
-        switch (type) {
-            case "1":
-                return STRATEGIES.get("EtfHolder");
-            case "2":
-                return STRATEGIES.get("EtfHolding");
-            case "3":
-                return STRATEGIES.get("IndexHolding");
-            case "4":
-                return STRATEGIES.get("IndexTrading");
-            case "5":
-                return STRATEGIES.get("StockTrading");
+        switch (normalized) {
+            case "EtfHolder":
+                return STRATEGIES.get("1");
+            case "EtfHolding":
+                return STRATEGIES.get("2");
+            case "IndexHolding":
+                return STRATEGIES.get("3");
+            case "IndexTrading":
+                return STRATEGIES.get("4");
+            case "StockTrading":
+                return STRATEGIES.get("5");
             default:
                 return null;
         }

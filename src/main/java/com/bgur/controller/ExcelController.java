@@ -13,9 +13,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,8 +47,8 @@ public class ExcelController {
     })
     @SecurityRequirement(name = "Bearer")
     @OperLog(operModule = "获取用户对应的公司excel信息列表", operType = "获取excel列表", operDesc = "根据用户信息获取对应的excel列表")
-    @PostMapping("/select/limit")
-    public CommonResult getExcelList(@Parameter CommonPageRequest commonPageRequest){
+    @PostMapping(value = "/select/limit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResult getExcelList(@Parameter @RequestBody CommonPageRequest commonPageRequest){
         return excelService.getExcelList(commonPageRequest);
     }
 
